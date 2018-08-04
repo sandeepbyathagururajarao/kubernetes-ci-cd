@@ -55,7 +55,7 @@ spec:
         tier: jenkins
     spec:
       containers:
-      - image: chadmoon/jenkins-docker-kubectl:latest
+      - image: 127.0.0.1:30400/jenkins-docker:latest
         name: jenkins
         securityContext:
           privileged: true
@@ -67,10 +67,21 @@ spec:
           mountPath: /root/.jenkins
         - name: docker
           mountPath: /var/run/docker.sock
+        - name: minikube
+          mountPath: /root/.minikube
+        - name: kube
+          mountPath: /root/.kube
       volumes:
       - name: docker
         hostPath:
           path: /var/run/docker.sock
+      - name: minikube
+        hostPath:
+          path: /root/.minikube
+      - name: kube
+        hostPath:
+          path: /root/.kube
       - name: jenkins-persistent-storage
         persistentVolumeClaim:
           claimName: jenkins-claim
+
